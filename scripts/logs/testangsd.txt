@@ -1,0 +1,8 @@
+8_merge.bwa.sam   
+90_merge.bwa.sam   
+91_merge.bwa.sam   
+92_merge.bwa.sam   
+93_merge.bwa.sam   
+94_merge.bwa.sam   
+96_merge.bwa.sam   
+9_merge.bwa.sam

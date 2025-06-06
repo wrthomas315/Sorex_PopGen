@@ -1,0 +1,21 @@
+slurmstepd: error: *** JOB 321397 ON dn001 CANCELLED AT 2024-04-02T13:56:36 ***
+slurmstepd: error: *** JOB 321393 ON dn013 CANCELLED AT 2024-04-02T13:56:44 ***
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (131, 39740, 1, 113)
+[M::mem_pestat] analyzing insert size distribution for orientation FF...
+[M::mem_pestat] (25, 50, 75) percentile: (143, 215, 272)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 530)
+[M::mem_pestat] mean and std.dev: (207.22, 93.54)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 659)
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (293, 339, 390)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (99, 584)
+[M::mem_pestat] mean and std.dev: (342.87, 72.38)
+[M::mem_pestat] low and high boundaries for proper pairs: (2, 681)
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] analyzing insert size distribution for orientation RR...
+[M::mem_pestat] (25, 50, 75) percentile: (150, 206, 295)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 585)
+[M::mem_pestat] mean and std.dev: (214.26, 90.52)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 730)
+[M::mem_pestat] skip orientation FF
+[M::mem_pestat] skip orientation RR

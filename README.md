@@ -1,12 +1,12 @@
-###Shrew Population Genetics
+### Shrew Population Genetics
 ###Started 7/26/2023
 ###William Thomas
 
-#Have two data sets. 96 samples from across Europe with low coverage. These can be used to determine population structuring, and isolation by distance/environment. Additionally, we have 10 high coverage samples that can be used for population demography (PSMC/SMC++).
+### Have two data sets. 96 samples from across Europe with low coverage. These can be used to determine population structuring, and isolation by distance/environment. Additionally, we have 10 high coverage samples that can be used for population demography (PSMC/SMC++).
 
 
 
-#First, load some of the modules we will need on Seawulf.
+### First, load some of the modules we will need on Seawulf.
 #load conda on SeaWulf
 module load anaconda/
 #and diff express to get fastp for sequencing QC
@@ -14,13 +14,13 @@ module load diffexp/1.0
 
 
 
-#Get genome from NCBI
+### Get genome from NCBI
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/027/595/985/GCF_027595985.1_mSorAra2.pri/GCF_027595985.1_mSorAra2.pri_rna.fna.gz ~/Sorex_PopGen/data/0_reference/
 mv ~/Sorex_PopGen/data/0_reference/GCF_027595985.1_mSorAra2.pri_genomic.fna.gz ~/Sorex_PopGen/data/0_reference/mSorAra2.pri.cur.20220707.fasta.gz
 
 
 
-#Now run fastp over all the transcripts to trim adapters and prune phred <15. This step is done for both data sets.
+### Now run fastp over all the transcripts to trim adapters and prune phred <15. This step is done for both data sets.
 module load slurm
 sbatch slurm_fastp.sh
 #which runs
@@ -40,13 +40,13 @@ done <../data/ids.txt
 
 
 
-#Create a list of the merged fastq (merging forward and reverse)
+### Create a list of the merged fastq (merging forward and reverse)
 ls ../data/trimmed/ | grep "merged" > ../merged_fastqs.txt
 
 
 
 
-#Now align these merged files with our new chromosome level genome assembly using BWA.
+### Now align these merged files with our new chromosome level genome assembly using BWA.
 #1 load hts module on Seawulf
 module load hts/1.0
 #2 index genome
@@ -73,7 +73,7 @@ done <../data/merged_fastqs.txt
 
 
 
-#Now sort the sam files into bam files
+### Now sort the sam files into bam files
 #make a list of same files
 ls sams/ > samsList.txt
 bash sam_sort.sh
@@ -92,7 +92,7 @@ done <../data/samsList.txt
 
 
 
-#For low coverage samples
+### For low coverage samples
 #Now mark the duplicate read alignments and merge samples from separate lanes
 bash mark_duplicates.sh
 #which runs
@@ -110,17 +110,17 @@ python setup.py build_ext --inplace
 #below did not work because of write permissions
 pip3 install -e .
 
-#Now run PCANGSD (can be done local)
+### Now run PCANGSD (can be done local)
 #pcangsd -b tester.beagle.gz -e 2 -t 64 -o test.output.pcangsd
 angsd -bam angsdListFiltpoint2.txt -GL 2 -doMajorMinor 1 -doMaf 1 -SNP_pval 2e-6 -minMapQ 30 -minQ 20 -minInd 25 -minMaf 0.05 -doGlf 2 -out slurmfillpoint2 -P 24
 pcangsd -b slurmfillpoint2.beagle.gz -e 2 -t 64 -o fillpoint2.output.pcangsd
 
 
-#Get stats on coverage, etc.
+### Get stats on coverage, etc.
 bash 5_stats.sh
-#Run ANGSD
+### Run ANGSD
 bash 6_angsd.sh
-#Get SFS
+### Get SFS
 sbatch 7_SFS.slurm
 
 #Not done: Isolation by distance and isolation by environment (Mantel test/partial Mantel test). Unsure if above was done correctly? Also look at test statistics?
@@ -128,7 +128,7 @@ sbatch 7_SFS.slurm
 
 
 #Below works but does not give a result that feels correct
-#For high coverage samples
+### For high coverage samples
 #Generate VCFs
 #Make alternate dictionaries with samtools to make vcf
 samtools faidx /gpfs/scratch/withomas/project_shrew_genome/data/genomes/sorAra/mSorAra2.pri.cur.20220707.fasta
@@ -186,7 +186,7 @@ tabix -p bed SUPER_1_comp.bed.gz
 
 
 
-#SMC++
+### SMC++
 #set working directory for singularity bin
 export SINGULARITY_BINDPATH="/gpfs/scratch/withomas/project_shrewPopGen/data/sams_hicov/vcfs2:/gpfs/home/withomas"
 #Run smc based on populations found from ANGSD PCA output, run for each chromosome seperate and then together
@@ -203,7 +203,7 @@ singularity run smpcc.sif split pop1.model.final.json pop2model.final.json SUPER
 
 
 
-#PSMC
+### PSMC
 #Note, made VCFs in different manner
 module load psmc
 bash bcf.script.slurm
